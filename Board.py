@@ -1,9 +1,9 @@
-class Board:
-    def _init_(self):
+class board:
+    def __init__(self):
         self.board = [[[" "] * 3 for i in range(3)] for i in range(3)]
 
     def display(self):
-        for layer in range (3):
+        for layer in range(3):
             for row in range(3):
                 print("|", end="")
                 for column in range(3):
