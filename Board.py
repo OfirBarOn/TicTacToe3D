@@ -17,10 +17,10 @@ class board:
         for layer in range(3):
             # Check horizontal and vertical in the same layer
             for i in range(3):
-                if all(self.board[i][j] == player for j in range(3)):
+                if all(self.board[layer][i][j] == player for j in range(3)):
                     return True
                     # Check columns
-                if all(self.board[j][i] == player for j in range(3)):
+                if all(self.board[layer][j][i] == player for j in range(3)):
                     return True
             # Check diagonals in the current layer
             if all(self.board[layer][i][i] == player for i in range(3)):

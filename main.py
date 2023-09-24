@@ -1,5 +1,4 @@
 import random
-from time import sleep
 from Board import board
 from Person import person
 
@@ -19,16 +18,18 @@ else:
     First_player_move = False
 
 flag = True
+first = False
+second = False
 while flag:
-    while First_player_move:
-        firstPlayer.playfun(board1)
+    if First_player_move:
+        first = firstPlayer.playfun(board1)
         First_player_move = False
 
-    while not First_player_move:
-        secondPlayer.playfun(board1)
+    if not First_player_move:
+        second = secondPlayer.playfun(board1)
         First_player_move = True
 
-    if not (firstPlayer.playfun(board1) or secondPlayer.playfun(board1)):
+    if not (first or second):
         continue
     else:
         while True:
@@ -42,7 +43,6 @@ while flag:
                 break
             else:
                 print("Invalid input")
-
 
         # if current_player == firstPlayer:
         #   Currentplayer = secondPlayer
