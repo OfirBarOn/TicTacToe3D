@@ -1,5 +1,6 @@
 from Board import board
 
+
 class person:
     def __init__(self, number_of_winnings, shape, name):
         self.number_of_winnings = number_of_winnings
@@ -15,4 +16,5 @@ class person:
             print(f'congratulations {self} you won!')
             self.number_of_winnings += 1
             return True
-        return False
+        else:
+            return False
