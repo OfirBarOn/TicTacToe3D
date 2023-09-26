@@ -1,5 +1,4 @@
-from Board import board
-
+from board import board
 
 
 class person:
@@ -26,5 +25,4 @@ class person:
         if board.check_win(self.shape):
             self.number_of_winnings += 1
             return True
-        else:
-            return False
+        return False

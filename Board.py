@@ -7,11 +7,11 @@ class board:
 
 
     def display(self):
-        for layer in range(3):
+        for layer in range (3):
             for row in range(3):
                 print("|", end="")
                 for column in range(3):
-                    print(self.board[layer][row][column], end="|")
+                    print(self.board[layer][row][column] , end="|")
                 print("")
             print("*******")
         return
@@ -47,26 +47,26 @@ class board:
             # Check rows and columns that span across layers
             for j in range(3):
                 if all(self.board[layer][i][j] == player for layer in range(3)):
-                    return True
+                        return True
         # Check win diagonals that span across layer
         for i in range(3):
             if all(self.board[j][i][j] == player for j in range(3)):
                 return True
-            if all(self.board[j][i][2 - j] == player for j in range(3)):
+            if all(self.board[j][i][2-j] == player for j in range(3)):
                 return True
             if all(self.board[j][j][i] == player for j in range(3)):
                 return True
-            if all(self.board[j][2 - j][i] == player for j in range(3)):
+            if all(self.board[j][2-j][i] == player for j in range(3)):
                 return True
 
-        # Check win in 4 big Diagonals
+        # Check win in 4 big Dagonals
         if all(self.board[i][i][i] == player for i in range(3)):
             return True
-        if all(self.board[i][i][2 - i] == player for i in range(3)):
+        if all(self.board[i][i][2-i] == player for i in range(3)):
             return True
-        if all(self.board[i][2 - i][i] == player for i in range(3)):
+        if all(self.board[i][2-i][i] == player for i in range(3)):
             return True
-        if all(self.board[i][2 - i][2 - i] == player for i in range(3)):
+        if all(self.board[i][2-i][2-i] == player for i in range(3)):
             return True
         return False
 
