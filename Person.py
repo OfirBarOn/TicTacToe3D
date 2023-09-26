@@ -1,4 +1,4 @@
-from board import board
+from Board import board
 
 
 class person:

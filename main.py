@@ -1,6 +1,6 @@
 import random
-from board import board
-from person import person
+from Board import board
+from Person import person
 
 board1 = board()
 
