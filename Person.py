@@ -24,11 +24,5 @@ class person:
         board.display()
         if board.check_win(self.shape):
             self.number_of_winnings += 1
-            if self != 'computer':
-                print(f'congratulations {self} you won!')
-                print(f'you have won {self.number_of_winnings} time(s)!')
-            else:
-                print("I'm sorry You lost")
-                print(f'The computer have won {self.number_of_winnings} time(s)!')
             return True
         return False
