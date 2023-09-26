@@ -1,8 +1,10 @@
 import random
+from inputimeout import inputimeout, TimeoutOccurred
 
 class board:
     def __init__(self):
         self.board = [[[" "] * 3 for i in range(3)] for i in range(3)]
+
 
     def display(self):
         for layer in range (3):
@@ -14,15 +16,25 @@ class board:
             print("*******")
         return
 
+
+    def check_full(self):
+        for layer in range (3):
+            for row in range(3):
+                for column in range(3):
+                    if (self.board[layer][row][column] == " "):
+                        return False
+        return True
+
+
     def check_win(self, player):
         # Check wins in each layer
         for layer in range(3):
             # Check horizontal and vertical in the same layer
             for i in range(3):
-                if all(self.board[i][j] == player for j in range(3)):
+                if all(self.board[layer][i][j] == player for j in range(3)):
                     return True
                     # Check columns
-                if all(self.board[j][i] == player for j in range(3)):
+                if all(self.board[layer][j][i] == player for j in range(3)):
                     return True
             # Check diagonals in the current layer
             if all(self.board[layer][i][i] == player for i in range(3)):
@@ -58,6 +70,7 @@ class board:
             return True
         return False
 
+
     def validate(self, num):
         try:
             if 1 <= num <= 3:
@@ -67,32 +80,28 @@ class board:
         except ValueError:
             return False
 
-    def validLayer(self):
+
+    def validlayColRow(self):
         while True:
             try:
-                layer = int(input("In which layer do you want to play?"
-                                  "please enter a number Between 1, 2, 3: "))
-                if self.validate(layer):
-                    return layer
-                else:
-                    print("Invalid Input")
-            except:
-                print("Invalid Input!")
-
-
-    def validColRow(self):
-        while True:
-            try:
-                place = input("where do you want to add your move?"
-                              "(add two numbers row and column seperated with space): ")
-                row, column = map(int, place.split())
-                if self.validate(row) and self.validate(column):
-                    place = [row,column]
+                #waits 60 seconds for input
+                place = inputimeout(prompt="where do you want to add your move?", timeout=10)
+                print(f'{place}')
+                layer, row, column = map(int, place.split())
+                if self.validate(row) and self.validate(column) and self.validate(layer):
+                    place = [layer,row,column]
                     return place
                 else:
                     print("Invalid Input")
+
+            except TimeoutOccurred:
+                print("You run out of time, It's the other player's turn")
+                return None
             except (ValueError, IndexError):
                 print("Invalid Input")
+
+        return None
+
 
     def computerturn(self, shape):
         while True:
@@ -104,16 +113,18 @@ class board:
                 return
 
 
-
     def add_move(self, shape):
-        layer = self.validLayer()
-        place = self.validColRow()
-        layer -= 1
-        row = place[0] -1
-        column =place[1] - 1
-        print(f'{layer} {row} {column}')
-        if (self.board[layer][row][column] != " ") :
-            print("This place is taken, pleace choose another place")
-            self.add_move(shape)
-        self.board[layer][row][column] = shape
+        while True:
+            place = self.validlayColRow()
+            if place == None:
+                return
+            layer =place[0] -1
+            row = place[1] -1
+            column =place[2] - 1
+            print(f'{layer} {row} {column}')
+            if (self.board[layer][row][column] != " ") :
+                print("This place is taken, pleace choose another place")
+                self.add_move(shape)
+            self.board[layer][row][column] = shape
+            break
         return
