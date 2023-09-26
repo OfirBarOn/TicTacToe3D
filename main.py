@@ -33,15 +33,31 @@ else:
 flag = True
 while flag:
     if First_player_move:
-        First_player_move = False
         if not firstPlayer.playfun(board1):
+            First_player_move = False
             continue
 
     else:
-        First_player_move = True
         if not secondPlayer.playfun(board1):
+            First_player_move = True
             continue
-
+    if First_player_move:
+        winner = firstPlayer
+    else:
+        winner = secondPlayer
+    if winner.name == 'computer':
+        print("Sorry you Lost!")
+    else:    
+        print(f'congratulations {winner} you won!')
+    print(f'The score is {firstPlayer} : {firstPlayer.number_of_winnings} , {secondPlayer} : {secondPlayer.number_of_winnings}')
+    
+    current_player = random.choice(['X', 'O'])
+    if current_player == 'X':
+        First_player_move = True
+    else:
+        First_player_move = False
+        
+        
     while True:
         answer = input("Do you want to play another round? (y/n): ")
         if answer == 'y':
@@ -49,6 +65,7 @@ while flag:
             board1 = board()
             break
         elif answer == 'n':
+            print("It was Fun ^_^, GoodBye!")
             flag = False
             break
         else:
