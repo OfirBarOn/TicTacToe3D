@@ -85,8 +85,7 @@ class board:
         while True:
             try:
                 #waits 60 seconds for input
-                place = inputimeout(prompt="where do you want to add your move?", timeout=10)
-                print(f'{place}')
+                place = inputimeout(prompt="where do you want to add your move?", timeout=30)
                 layer, row, column = map(int, place.split())
                 if self.validate(row) and self.validate(column) and self.validate(layer):
                     place = [layer,row,column]
@@ -104,6 +103,29 @@ class board:
 
 
     def computerturn(self, shape):
+    
+        for layer in range(3):
+            for row in range(3):
+                for column in range(3):
+                    if (self.board[layer][row][column] == " "):
+                        self.board[layer][row][column] = shape
+                        res = self.check_win(shape)
+                        if res :
+                            return 
+                        self.board[layer][row][column] = " "
+                        
+        second_shape = "X" if shape == "O" else "O"
+                        
+        for layer in range(3):
+            for row in range(3):
+                for column in range(3):
+                    if (self.board[layer][row][column] == " "):
+                        self.board[layer][row][column] = second_shape
+                        res = self.check_win(second_shape)
+                        if res :
+                            self.board[layer][row][column] = shape
+                            return 
+                        self.board[layer][row][column] = " "
         while True:
             layer = random.randrange(0, 3)
             row = random.randrange(0, 3)
@@ -111,6 +133,8 @@ class board:
             if (self.board[layer][row][column] == " "):
                 self.board[layer][row][column] = shape
                 return
+            
+            
 
 
     def add_move(self, shape):
@@ -121,7 +145,7 @@ class board:
             layer =place[0] -1
             row = place[1] -1
             column =place[2] - 1
-            print(f'{layer} {row} {column}')
+            #print(f'{layer} {row} {column}')
             if (self.board[layer][row][column] != " ") :
                 print("This place is taken, pleace choose another place")
                 self.add_move(shape)
